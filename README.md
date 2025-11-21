@@ -76,12 +76,12 @@ int main() {
             if (checkWin(board, current)) {
                 clearScreen();
                 displayBoard(board);
-                cout << "Player " << current << " wins! 🎉\n";
+                cout << "Player " << current << " wins!💞 🎉\n";
                 gameOver = true;
             } else if (isDraw(board)) {
                 clearScreen();
                 displayBoard(board);
-                cout << "It's a draw! 🤝\n";
+                cout << "It's a draw!🤧 🤝\n";
                 gameOver = true;
             } else {
                 current = (current == 'X') ? 'O' : 'X';
@@ -95,6 +95,6 @@ int main() {
         else playAgain = false;
     }
 
-    cout << "Thanks for playing! 👋\n";
+    cout << "Thanks for playing! 👋🔥\n";
     return 0;
 }
