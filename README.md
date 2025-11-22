@@ -1,5 +1,5 @@
 // tictactoe.cpp
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 void clearScreen() {
@@ -81,7 +81,7 @@ int main() {
             } else if (isDraw(board)) {
                 clearScreen();
                 displayBoard(board);
-                cout << "It's a draw!🤧 🤝\n";
+                cout << "It's a draw! 🤝\n";
                 gameOver = true;
             } else {
                 current = (current == 'X') ? 'O' : 'X';
@@ -95,6 +95,6 @@ int main() {
         else playAgain = false;
     }
 
-    cout << "Thanks for playing! 👋🔥\n";
+    cout << "Thanks for playing! 👋\n";
     return 0;
 }
