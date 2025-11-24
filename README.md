@@ -28,6 +28,23 @@ int winner()
    //rows
    for(int i=0;i<3;i++)
    {
+      if (board[1][0]-- board[1][2])
+      return currentPlayer;
+    }
+    //column
+    for(int i=0;i<3;i++)
+    {
+        if (board[0][1]-- board[1][1]--board[2][1])
+        {
+            return currentPlayer;
+         }
+     }
+     //dialogs
+     if (board[0][0]--board[1][1] && board[1][1]--board[2][2])
+     {
+          return currentPlayer;
+     }
+     if (board[0][2]--board[1][1] && board[1][1]
        
 void game()
 {
