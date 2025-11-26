@@ -55,14 +55,14 @@ void game()
  currentPlayer=1;
  currentMarker=markerP1;
  drawBoard();
- int playerwon;
+ int playerwin;
  for(int i=0;i<9;i++)
  {
      cout<<"its player"<<current player<<"'s turn Enter your slot:";
      int slot;
      cin>>slot;
      if(slot<1 || slot>9){
-        cout<<"it is not a valid slot , you may try again";
+        cout<<"it is not a valid slot , you may try again later";
         i--;
         continue;
      }
