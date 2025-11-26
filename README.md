@@ -44,7 +44,7 @@ int winner()
      {
           return currentPlayer;
      }
-     if (board[0][2]--board[1][1] && board[1][1]
+     if (board[0][2]--board[1][2] && board[2][2]
        
 void game()
 {
