@@ -1,19 +1,23 @@
 # Tic-Tac-Toe 🎮
 
-A simple 2-player Tic-Tac-Toe game written in C++.
+A simple C++ Tic-Tac-Toe project that includes:
+- ✔ A basic 2-player version  
+- ✔ An advanced version with AI (Minimax algorithm)
+
+This project demonstrates game logic, input handling, decision making, and basic AI concepts.
 
 ---
 
 ## 📂 Files
-- tictactoe.cpp → Source code of the game  
+- tictactoe.cpp → 2-player local mode  
+- tictactoe_ai.cpp → AI mode using Minimax  
 - README.md → Project documentation  
 
 ---
 
-## ▶ How to Compile & Run (Windows)
+## ▶ How to Compile (Windows)
 
-Open CMD in the project folder and run:
-
+### *Basic Version*
 ```bash
 g++ tictactoe.cpp -o tictactoe.exe -mconsole
 .\tictactoe.exe
