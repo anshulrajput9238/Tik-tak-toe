@@ -1,4 +1,4 @@
-🎮 Tic-Tac-Toe (C++)
+## 🎮 Tic-Tac-Toe (C++)
 
 A simple and interactive Tic-Tac-Toe game built in C++, featuring:
 
@@ -43,7 +43,7 @@ Choose (1-4):
 
 ---
 
-🛠 How to Compile (Windows)
+## 🛠 How to Compile (Windows)
 
 Basic Version
 
@@ -58,7 +58,7 @@ g++ tictactoe_ai.cpp -o tictactoe_ai.exe -static-libstdc++ -static-libgcc
 
 ---
 
-🚀 Features
+## 🚀 Features
 
 🧠 AI opponent using Minimax
 
@@ -74,7 +74,7 @@ g++ tictactoe_ai.cpp -o tictactoe_ai.exe -static-libstdc++ -static-libgcc
 
 ---
 
-👨‍💻 Author
+## 👨‍💻 Author
 
 Anshul Rajput
 Software Developer | C, C++, Cloud & AI Enthusiast
