@@ -13,18 +13,18 @@ This project demonstrates fundamental programming concepts such as loops, condit
 
 ---
 
-📸 Game Preview (Console Output)
+## 📸 Game Preview (Console Output)
 
+text
 ==============================
          Tic-Tac-Toe (Console)
 ==============================
 
-1) 2-player (Local)
-2) Play vs Computer (You are X)
-3) Play vs Computer (Computer starts as X)
-4) Exit
+1) 2-player (Local)  
+2) Play vs Computer (You are X)  
+3) Play vs Computer (Computer starts as X)  
+4) Exit  
 Choose (1-4):
-
 
 ---
 
