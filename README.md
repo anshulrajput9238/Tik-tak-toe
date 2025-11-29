@@ -17,25 +17,27 @@ This project demonstrates fundamental programming concepts such as loops, condit
 
 text
 ==============================
-         Tic-Tac-Toe (Console)
+      Tic-Tac-Toe (Console)
 ==============================
 
-1) 2-player (Local)  
-2) Play vs Computer (You are X)  
-3) Play vs Computer (Computer starts as X)  
-4) Exit  
+1) 2-player (Local)
+2) Play vs Computer (You are X)
+3) Play vs Computer (Computer starts as X)
+4) Exit
+
 Choose (1-4):
+                           
 
 ---
 
-📁 Project Structure
+## 📁 Project Structure
 
-File	Description
-
-tictactoe.cpp	2-Player local mode
-tictactoe_ai.cpp	AI mode (Minimax algorithm)
-output.txt	Saved console output preview
-README.md	Project documentation
+| File | Description |
+|------|-------------|
+| tictactoe.cpp | Local 2-player mode |
+| tictactoe_ai.cpp | AI mode using Minimax |
+| output.txt | Saved console output preview |
+| README.md | Project documentation |
 
 
 
