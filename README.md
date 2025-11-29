@@ -1,24 +1,86 @@
-# Tic-Tac-Toe 🎮
+🎮 Tic-Tac-Toe (C++)
 
-A simple C++ Tic-Tac-Toe project that includes:
-- ✔ A basic 2-player version  
-- ✔ An advanced version with AI (Minimax algorithm)
+A simple and interactive Tic-Tac-Toe game built in C++, featuring:
 
-This project demonstrates game logic, input handling, decision making, and basic AI concepts.
+✔ 2-Player Local Mode
+✔ AI Mode using Minimax Algorithm
+✔ Clean console UI
+✔ Input validation & error handling
+✔ Organized & modular code
 
----
+This project demonstrates fundamental programming concepts such as loops, conditions, game logic, decision-making, and basic AI.
 
-## 📂 Files
-- tictactoe.cpp → 2-player local mode  
-- tictactoe_ai.cpp → AI mode using Minimax  
-- README.md → Project documentation  
 
 ---
 
-## ▶ How to Compile (Windows)
+📸 Game Preview (Console Output)
 
-### *Basic Version*
-```bash
-g++ tictactoe.cpp -o tictactoe.exe -mconsole
-.\tictactoe.exe
-This is my first Pull Request update.
+==============================
+         Tic-Tac-Toe (Console)
+==============================
+
+1) 2-player (Local)
+2) Play vs Computer (You are X)
+3) Play vs Computer (Computer starts as X)
+4) Exit
+Choose (1-4):
+
+
+---
+
+📁 Project Structure
+
+File	Description
+
+tictactoe.cpp	2-Player local mode
+tictactoe_ai.cpp	AI mode (Minimax algorithm)
+output.txt	Saved console output preview
+README.md	Project documentation
+
+
+
+---
+
+🛠 How to Compile (Windows)
+
+Basic Version
+
+g++ tictactoe.cpp -o tictactoe.exe -static-libstdc++ -static-libgcc
+./tictactoe.exe
+
+AI Version
+
+g++ tictactoe_ai.cpp -o tictactoe_ai.exe -static-libstdc++ -static-libgcc
+./tictactoe_ai.exe
+
+
+---
+
+🚀 Features
+
+🧠 AI opponent using Minimax
+
+🎯 Error-free user input
+
+🎨 Clean and readable console UI
+
+🔁 Replay option
+
+🧩 Best for learning C++ game development
+
+
+
+---
+
+👨‍💻 Author
+
+Anshul Rajput
+Software Developer | C, C++, Cloud & AI Enthusiast
+👉 GitHub: https://github.com/anshulrajput9238
+
+
+
+---
+
+
+---
