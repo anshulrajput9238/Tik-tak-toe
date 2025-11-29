@@ -1,30 +1,32 @@
-// tictactoe_ai.cpp
-// Console Tic-Tac-Toe with optional AI (Minimax)
-// Compile: g++ tictactoe_ai.cpp -o tictactoe.exe -mconsole
+// tictactoe.cpp
+// Compile: g++ -std=c++17 tictactoe.cpp -o tictactoe.exe
+// Run:
+//  - Two player:  ./tictactoe.exe
+//  - Play vs AI:  ./tictactoe.exe ai
 
 #include <bits/stdc++.h>
 using namespace std;
 
-const char HUMAN = 'X';
-const char AI = 'O';
-const char EMPTY = ' ';
+#ifdef _WIN32
+const string CLEAR_CMD = "cls";
+#else
+const string CLEAR_CMD = "clear";
+#endif
 
 void clearScreen() {
-    // keep it simple and portable (just print some newlines)
-    cout << string(20, '\n');
+    // Prefer system("cls") on Windows because it prevents the blank-lines confusion.
+    system(CLEAR_CMD.c_str());
 }
 
-void displayBoard(const array<char,9>& board) {
+void drawBoard(const array<char,9>& b) {
     cout << "\n";
-    cout << " " << board[0] << " | " << board[1] << " | " << board[2] << "    1 | 2 | 3\n";
+    cout << " " << b[0] << " | " << b[1] << " | " << b[2] << "    1 | 2 | 3\n";
     cout << "---+---+---" << "    ---+---+---\n";
-    cout << " " << board[3] << " | " << board[4] << " | " << board[5] << "    4 | 5 | 6\n";
+    cout << " " << b[3] << " | " << b[4] << " | " << b[5] << "    4 | 5 | 6\n";
     cout << "---+---+---" << "    ---+---+---\n";
-    cout << " " << board[6] << " | " << board[7] << " | " << board[8] << "    7 | 8 | 9\n";
-    cout << "\n";
+    cout << " " << b[6] << " | " << b[7] << " | " << b[8] << "    7 | 8 | 9\n\n";
 }
 
-// Check for a win or tie
 char checkWinner(const array<char,9>& b) {
     const int wins[8][3] = {
         {0,1,2},{3,4,5},{6,7,8}, // rows
@@ -32,176 +34,129 @@ char checkWinner(const array<char,9>& b) {
         {0,4,8},{2,4,6}          // diags
     };
     for (auto &w : wins) {
-        if (b[w[0]] != EMPTY && b[w[0]] == b[w[1]] && b[w[1]] == b[w[2]])
+        if (b[w[0]] != ' ' && b[w[0]] == b[w[1]] && b[w[1]] == b[w[2]])
             return b[w[0]];
     }
-    // tie?
-    bool anyEmpty = false;
-    for (char c : b) if (c == EMPTY) { anyEmpty = true; break; }
-    if (!anyEmpty) return 'T'; // Tie
-    return 'N'; // None yet
+    for (char c : b) if (c == ' ') return 'N'; // None yet
+    return 'T'; // Tie
 }
 
-// Minimax evaluation: +10 for AI win, -10 for human win, 0 otherwise
-int evaluate(const array<char,9>& board) {
-    char w = checkWinner(board);
-    if (w == AI) return +10;
-    if (w == HUMAN) return -10;
-    return 0;
-}
-
-bool movesLeft(const array<char,9>& board) {
-    for (char c : board) if (c == EMPTY) return true;
-    return false;
-}
-
-int minimax(array<char,9>& board, int depth, bool isMax) {
-    int score = evaluate(board);
-    if (score == 10) return score - depth;   // prefer faster wins
-    if (score == -10) return score + depth;  // prefer slower losses
-    if (!movesLeft(board)) return 0;
+// Minimax for AI (X = human player, O = AI by default)
+int minimax(array<char,9>& board, bool isMax) {
+    char res = checkWinner(board);
+    if (res == 'O') return +10;
+    if (res == 'X') return -10;
+    if (res == 'T') return 0;
 
     if (isMax) {
         int best = -1000;
-        for (int i=0;i<9;i++) {
-            if (board[i] == EMPTY) {
-                board[i] = AI;
-                int val = minimax(board, depth+1, false);
-                board[i] = EMPTY;
-                best = max(best, val);
-            }
+        for (int i=0;i<9;++i) if (board[i]==' ') {
+            board[i] = 'O';
+            best = max(best, minimax(board, false));
+            board[i] = ' ';
         }
         return best;
     } else {
         int best = 1000;
-        for (int i=0;i<9;i++) {
-            if (board[i] == EMPTY) {
-                board[i] = HUMAN;
-                int val = minimax(board, depth+1, true);
-                board[i] = EMPTY;
-                best = min(best, val);
-            }
+        for (int i=0;i<9;++i) if (board[i]==' ') {
+            board[i] = 'X';
+            best = min(best, minimax(board, true));
+            board[i] = ' ';
         }
         return best;
     }
 }
 
 int findBestMove(array<char,9>& board) {
-    int bestVal = -1000;
-    int bestMove = -1;
-    for (int i=0;i<9;i++) {
-        if (board[i] == EMPTY) {
-            board[i] = AI;
-            int moveVal = minimax(board, 0, false);
-            board[i] = EMPTY;
-            if (moveVal > bestVal) {
-                bestMove = i;
-                bestVal = moveVal;
-            }
-        }
+    int bestVal = -1000, bestMove = -1;
+    for (int i=0;i<9;++i) if (board[i]==' ') {
+        board[i] = 'O';
+        int moveVal = minimax(board, false);
+        board[i] = ' ';
+        if (moveVal > bestVal) { bestMove = i; bestVal = moveVal; }
     }
     return bestMove;
 }
 
-int getHumanMove(const array<char,9>& board) {
+int getIntFromUser(const string &prompt) {
     while (true) {
-        cout << "Enter your move (1..9): ";
+        cout << prompt;
         string s;
         if (!getline(cin, s)) return -1;
+        // trim
+        while (!s.empty() && isspace(s.back())) s.pop_back();
         if (s.empty()) continue;
-        // support if user types spaces
-        int pos = 0;
+        // allow digits only
+        bool ok = true;
+        for (char c : s) if (!isdigit((unsigned char)c)) { ok = false; break; }
+        if (!ok) { cout << "Please enter a number.\n"; continue; }
         try {
-            pos = stoi(s);
-        } catch(...) { cout << "Invalid input. Type a number 1..9.\n"; continue; }
-        if (pos < 1 || pos > 9) { cout << "Enter number between 1 and 9.\n"; continue; }
-        if (board[pos-1] != EMPTY) { cout << "Cell already used. Choose another.\n"; continue; }
-        return pos-1;
+            int v = stoi(s);
+            return v;
+        } catch(...) { cout << "Invalid number.\n"; }
     }
 }
 
-void playTwoPlayer() {
-    array<char,9> board;
-    board.fill(EMPTY);
-    char turn = HUMAN; // X starts
-    while (true) {
-        clearScreen();
-        cout << "Tic-Tac-Toe (2 players)\n";
-        displayBoard(board);
-        char state = checkWinner(board);
-        if (state == HUMAN) { cout << "X wins!\n"; break; }
-        if (state == AI) { cout << "O wins!\n"; break; }
-        if (state == 'T') { cout << "It's a tie!\n"; break; }
-
-        cout << (turn == HUMAN ? "Player X's turn\n" : "Player O's turn\n");
-        int mv = getHumanMove(board);
-        if (mv < 0) { cout << "Input error. Exiting.\n"; return; }
-        board[mv] = turn;
-        turn = (turn == HUMAN ? AI : HUMAN);
-    }
-    displayBoard(board);
-    cout << "Press Enter to continue...";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-}
-
-void playVsAI(bool humanFirst) {
-    array<char,9> board;
-    board.fill(EMPTY);
-    char turn = humanFirst ? HUMAN : AI;
-    while (true) {
-        clearScreen();
-        cout << "Tic-Tac-Toe (You vs Computer)\n";
-        displayBoard(board);
-        char state = checkWinner(board);
-        if (state == HUMAN) { cout << "You (X) win! Nice!\n"; break; }
-        if (state == AI) { cout << "Computer (O) wins.\n"; break; }
-        if (state == 'T') { cout << "It's a tie!\n"; break; }
-
-        if (turn == HUMAN) {
-            cout << "Your (X) move.\n";
-            int mv = getHumanMove(board);
-            if (mv < 0) { cout << "Input error. Exiting.\n"; return; }
-            board[mv] = HUMAN;
-            turn = AI;
-        } else {
-            cout << "Computer is thinking...\n";
-            int best = findBestMove(board);
-            if (best == -1) {
-                // fallback - shouldn't happen
-                for (int i=0;i<9;i++) if (board[i] == EMPTY) { best = i; break; }
-            }
-            board[best] = AI;
-            turn = HUMAN;
-        }
-    }
-    displayBoard(board);
-    cout << "Press Enter to continue...";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-}
-
-int main() {
+int main(int argc, char** argv) {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+
+    bool useAI = false;
+    if (argc > 1) {
+        string arg = argv[1];
+        transform(arg.begin(), arg.end(), arg.begin(), ::tolower);
+        if (arg == "ai" || arg == "bot" || arg == "computer") useAI = true;
+    }
+
+    array<char,9> board;
+    board.fill(' ');
+    char player = 'X'; // X always starts (human)
+    clearScreen();
+    cout << "Tic-Tac-Toe\n";
+    cout << "Controls: choose position 1-9 from the keypad mapping shown on the right.\n";
+    cout << (useAI ? "You play X vs AI (O).\n" : "Two-player mode (X and O).\n");
+    cout << "Press Enter to start...";
+    string tmp; getline(cin, tmp);
+
     while (true) {
         clearScreen();
-        cout << "=========================\n";
-        cout << "   Tic-Tac-Toe (Console)\n";
-        cout << "=========================\n";
-        cout << "1) 2-player (Local)\n";
-        cout << "2) Play vs Computer (You are X)\n";
-        cout << "3) Play vs Computer (Computer starts as X)\n";
-        cout << "4) Exit\n";
-        cout << "Choose (1-4): ";
-        string line;
-        if (!getline(cin, line)) break;
-        if (line.empty()) continue;
-        int choice = 0;
-        try { choice = stoi(line); } catch(...) { choice = 0; }
-        if (choice == 1) playTwoPlayer();
-        else if (choice == 2) playVsAI(true);
-        else if (choice == 3) playVsAI(false);
-        else if (choice == 4) { cout << "Goodbye!\n"; break; }
-        else { cout << "Invalid choice. Press Enter to retry..."; cin.ignore(numeric_limits<streamsize>::max(), '\n'); }
+        drawBoard(board);
+        char res = checkWinner(board);
+        if (res == 'X' || res == 'O') {
+            cout << "Player " << res << " wins!\n";
+            break;
+        } else if (res == 'T') {
+            cout << "It's a tie!\n";
+            break;
+        }
+
+        if (useAI && player == 'O') {
+            cout << "AI is thinking...\n";
+            int mv = findBestMove(board);
+            if (mv >= 0) board[mv] = 'O';
+            player = 'X';
+            continue;
+        }
+
+        cout << "Player " << player << "'s turn.\n";
+        int pos = getIntFromUser("Enter position (1-9): ");
+        if (pos < 1 || pos > 9) {
+            cout << "Invalid position, try again.\n";
+            cout << "Press Enter to continue..."; getline(cin,tmp);
+            continue;
+        }
+        int idx = pos - 1;
+        if (board[idx] != ' ') {
+            cout << "Cell already taken, try again.\n";
+            cout << "Press Enter to continue..."; getline(cin,tmp);
+            continue;
+        }
+        board[idx] = player;
+        player = (player == 'X') ? 'O' : 'X';
     }
+
+    cout << "\nFinal board:\n";
+    drawBoard(board);
+    cout << "Thanks for playing!\n";
     return 0;
 }
