@@ -1,0 +1,23 @@
+name: C++ Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install g++
+      run: sudo apt-get install g++ -y
+
+    - name: Build tic-tac-toe
+      run: g++ tictactoe.cpp -o tictactoe
+
+    - name: Build AI version
+      run: g++ tictactoe_ai.cpp -o tictactoe_ai
