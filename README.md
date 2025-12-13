@@ -15,7 +15,7 @@ This project demonstrates fundamental programming concepts such as loops, condit
 
 ## 📸 Game Preview (Console Output)
 
-text
+Text
 ==============================
       Tic-Tac-Toe (Console)
 ==============================
