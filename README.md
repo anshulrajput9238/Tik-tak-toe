@@ -78,7 +78,7 @@ g++ tictactoe_ai.cpp -o tictactoe_ai.exe -static-libstdc++ -static-libgcc
 
 Anshul Rajput
 Software Developer | C, C++, Cloud & AI Enthusiast
-👉 GitHub: https://github.com/anshulrajput9238
+👉 GitHub: https://github.com/anshull-rajput
 
 
 
